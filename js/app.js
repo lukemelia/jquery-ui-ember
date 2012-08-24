@@ -1,4 +1,5 @@
-var App = Em.Application.create();
+window.App = Em.Application.create();
+App.initialize();
 
 // Put jQuery UI inside its own namespace
 JQ = {};
@@ -129,7 +130,15 @@ JQ.Menu = Em.CollectionView.extend(JQ.Widget, {
         ui.refresh();
       });
     }
-  }
+  },
+  itemViewClass: Em.View.extend({
+    // Make it so that the default context for evaluating handlebars
+    // bindings is the content of this child view. In a near-future
+    // version of Ember, the leading underscore will be unnecessary.
+    _context: function(){
+      return this.get('content');
+    }.property('content')
+  })
 });
 
 // Create a new Ember view for the jQuery UI Progress Bar widget
@@ -143,7 +152,8 @@ JQ.ProgressBar = Em.View.extend(JQ.Widget, {
 // views.
 App.controller = Em.Object.create({
   progress: 0,
-  menuDisabled: true
+  menuDisabled: true,
+  people: []
 });
 
 // Create a subclass of `JQ.Button` to define behavior for our button.
@@ -193,7 +203,7 @@ App.ProgressBar = JQ.ProgressBar.extend({
         name: "Yehuda Katz"
       }),
       Em.Object.create({
-        name: "Majd Potatoes"
+        name: "Selden Seen"
       })
     ]);
 
@@ -207,17 +217,15 @@ App.ProgressBar = JQ.ProgressBar.extend({
 /**
 Template:
 
-{{view App.Button label="Click to Load People"}}
-<br><br>
-{{view App.ProgressBar valueBinding="App.controller.progress"}}
-<br><br>
-{{#collection JQ.Menu
-             contentBinding="App.controller.people"
-             disabledBinding="App.controller.menuDisabled"}}
- <a href="#">
-   {{content.name}}
- </a>
-{{else}}
- <a href="#">LIST NOT LOADED</a>
-{{/collection}}
+{{#with App.controller}}
+  {{view App.Button label="Click to Load People"}}
+  <br><br>
+  {{view App.ProgressBar valueBinding="progress"}}
+  <br><br>
+  {{#collection JQ.Menu contentBinding="people" disabledBinding="menuDisabled"}}
+    <a href="#">{{name}}</a>
+  {{else}}
+    <a href="#">LIST NOT LOADED</a>
+  {{/collection}}
+{{/with}}
 */
