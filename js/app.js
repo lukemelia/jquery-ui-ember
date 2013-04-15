@@ -1,8 +1,7 @@
-window.App = Em.Application.create();
-App.initialize();
+window.App = Ember.Application.create();
 
 // Put jQuery UI inside its own namespace
-JQ = {};
+JQ = Ember.Namespace.create();
 
 // Create a new mixin for jQuery UI widgets using the Ember
 // mixin syntax.
@@ -57,11 +56,11 @@ JQ.Widget = Em.Mixin.create({
       options[key] = this.get(key);
 
       // Set up an observer on the Ember property. When it changes,
-      // call jQuery UI's `setOption` method to reflect the property onto
+      // call jQuery UI's `option` method to reflect the property onto
       // the jQuery UI widget.
       var observer = function() {
         var value = this.get(key);
-        this.get('ui')._setOption(key, value);
+        this.get('ui').option(key, value);
       };
 
       this.addObserver(key, observer);
@@ -77,7 +76,7 @@ JQ.Widget = Em.Mixin.create({
   // Each jQuery UI widget has a number of custom events that they can
   // trigger. For instance, the progressbar widget triggers a `complete`
   // event when the progress bar finishes. Make these events behave like
-  // normal Ember events. For instance, a subclass of JQ.ProgressBar
+  // normal Ember events. For instance, a subclass of JQ.ProgressBarView
   // could implement the `complete` method to be notified when the jQuery
   // UI widget triggered the event.
   _gatherEvents: function(options) {
@@ -97,20 +96,20 @@ JQ.Widget = Em.Mixin.create({
 });
 
 // Create a new Ember view for the jQuery UI Button widget
-JQ.Button = Em.View.extend(JQ.Widget, {
+JQ.ButtonView = Em.View.extend(JQ.Widget, {
   uiType: 'button',
   uiOptions: ['label', 'disabled'],
 
   tagName: 'button'
 });
 
-// Create a new Ember view for the jQuery UI Menu widget (new
-// in jQuery UI 1.9). Because it wraps a collection, we extend from
+// Create a new Ember view for the jQuery UI Menu widget.
+// Because it wraps a collection, we extend from
 // Ember's CollectionView rather than a normal view.
 //
 // This means that you should use `#collection` in your template to
 // create this view.
-JQ.Menu = Em.CollectionView.extend(JQ.Widget, {
+JQ.MenuView = Em.CollectionView.extend(JQ.Widget, {
   uiType: 'menu',
   uiOptions: ['disabled'],
   uiEvents: ['select'],
@@ -123,26 +122,23 @@ JQ.Menu = Em.CollectionView.extend(JQ.Widget, {
     this._super(content, start, removed, added);
 
     var ui = this.get('ui');
-    if(ui) {
+    if (ui) {
       // Schedule the refresh for after Ember has completed it's
       // render cycle
-      Em.run.schedule('render', function(){
-        ui.refresh();
-      });
+      Em.run.scheduleOnce('afterRender', ui, ui.refresh);
     }
   },
   itemViewClass: Em.View.extend({
     // Make it so that the default context for evaluating handlebars
-    // bindings is the content of this child view. In a near-future
-    // version of Ember, the leading underscore will be unnecessary.
-    _context: function(){
+    // bindings is the content of this child view.
+    context: function(){
       return this.get('content');
     }.property('content')
   })
 });
 
 // Create a new Ember view for the jQuery UI Progress Bar widget
-JQ.ProgressBar = Em.View.extend(JQ.Widget, {
+JQ.ProgressBarView = Em.View.extend(JQ.Widget, {
   uiType: 'progressbar',
   uiOptions: ['value', 'max'],
   uiEvents: ['change', 'complete']
@@ -150,52 +146,49 @@ JQ.ProgressBar = Em.View.extend(JQ.Widget, {
 
 // Create a simple controller to hold values that will be shared across
 // views.
-App.controller = Em.Object.create({
+App.ApplicationController = Em.Controller.extend({
   progress: 0,
   menuDisabled: true,
-  people: []
+  people: [],
+  incrementProgress: function() {
+    // Get the current progress value.
+    var val = this.get('progress');
+
+    if(val < 100) {
+      // If the value is less than 100, increment it.
+      this.incrementProperty('progress');
+
+      // Schedule another incrementProgress call in 30ms.
+      Ember.run.later(this, this.incrementProgress, 30);
+    }
+  }
 });
 
-// Create a subclass of `JQ.Button` to define behavior for our button.
-App.Button = JQ.Button.extend({
+// Create a subclass of `JQ.ButtonView` to define behavior for our button.
+App.ButtonView = JQ.ButtonView.extend({
   // When the button is clicked...
   click: function() {
     // Disable the button.
     this.set('disabled', true);
 
-    // Increment the progress bar.
-    this.increment();
-  },
-
-  increment: function() {
-    var self = this;
-
-    // Get the current progress value from the controller.
-    var val = App.controller.get('progress');
-
-    if(val < 100) {
-      // If the value is less than 100, increment it.
-      App.controller.set('progress', val + 1);
-
-      // Schedule another increment call from 30ms.
-      setTimeout(function() { self.increment() }, 30);
-    }
+    // Increment the progress bar by delegating to the controller.
+    this.get('controller').incrementProgress();
   }
 });
 
-// Create a subclass of `JQ.ProgressBar` to define behavior for our
+// Create a subclass of `JQ.ProgressBarView` to define behavior for our
 // progress bar.
-App.ProgressBar = JQ.ProgressBar.extend({
+App.ProgressBarView = JQ.ProgressBarView.extend({
   // When the jQuery UI progress bar reaches 100%, it will invoke the
   // `complete` event. Recall that JQ.Widget registers a callback for
   // the `complete` event in `didInsertElement`, which calls the
   // `complete` method.
   complete: function() {
-    // When the progress bar finishes, update App.controller with the
-    // list of people. Because our template binds the JQ.Menu to this
+    // When the progress bar finishes, update the controller with the
+    // list of people. Because our template binds the JQ.MenuView to this
     // value, it will automatically populate with the new people and
     // refresh the menu.
-    App.controller.set('people', [
+    this.set('controller.people', [
       Em.Object.create({
         name: "Tom DAAAAALE"
       }),
@@ -208,24 +201,22 @@ App.ProgressBar = JQ.ProgressBar.extend({
     ]);
 
     // Set the `menuDisabled` property of our controller to false.
-    // Because the JQ.Menu binds its `disabled` property to
-    // App.controller.menuDisabled, this will enable it.
-    App.controller.set('menuDisabled', false);
+    // Because the JQ.MenuView binds its `disabled` property to
+    // the controller's menuDisabled, this will enable it.
+    this.set('controller.menuDisabled', false);
   }
 });
 
 /**
 Template:
 
-{{#with App.controller}}
-  {{view App.Button label="Click to Load People"}}
-  <br><br>
-  {{view App.ProgressBar valueBinding="progress"}}
-  <br><br>
-  {{#collection JQ.Menu contentBinding="people" disabledBinding="menuDisabled"}}
-    <a href="#">{{name}}</a>
-  {{else}}
-    <a href="#">LIST NOT LOADED</a>
-  {{/collection}}
-{{/with}}
+{{view App.ButtonView label="Click to Load People"}}
+<br><br>
+{{view App.ProgressBarView valueBinding="progress"}}
+<br><br>
+{{#collection JQ.MenuView contentBinding="people" disabledBinding="menuDisabled"}}
+  <a href="#">{{name}}</a>
+{{else}}
+  <a href="#">LIST NOT LOADED</a>
+{{/collection}}
 */
