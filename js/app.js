@@ -17,8 +17,13 @@ JQ.Widget = Em.Mixin.create({
 
     // Create a new instance of the jQuery UI widget based on its `uiType`
     // and the current element.
-    var ui = jQuery.ui[this.get('uiType')](options, this.get('element'));
-
+    
+	var namespace = this.get('uiNamespace') || 'ui'; //the included jQuery UI widgets use the 'ui' namespace, ohter jQuery UI plugins may (or rather should) use their own namespace
+	
+	jQuery(this.get('element'))[this.get('uiType')](options); //create widget
+	var ui = jQuery(this.get('element')).data("ui-"+this.get('uiType')) ;//save instance
+	
+	
     // Save off the instance of the jQuery UI widget as the `ui` property
     // on this Ember view.
     this.set('ui', ui);
@@ -38,7 +43,10 @@ JQ.Widget = Em.Mixin.create({
           this.removeObserver(prop, observers[prop]);
         }
       }
-      ui._destroy();
+      
+      
+      //ui._destroy(); this is private, so we better use
+      ui.destroy(); 
     }
   },
 
@@ -188,6 +196,9 @@ App.ProgressBarView = JQ.ProgressBarView.extend({
     // list of people. Because our template binds the JQ.MenuView to this
     // value, it will automatically populate with the new people and
     // refresh the menu.
+    
+    console.log("epic stuff happened");
+    
     this.set('controller.people', [
       Em.Object.create({
         name: "Tom DAAAAALE"
