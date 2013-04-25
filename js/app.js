@@ -38,8 +38,11 @@ JQ.Widget = Em.Mixin.create({
           this.removeObserver(prop, observers[prop]);
         }
       }
-      ui._destroy();
+      ui.destroy();
+      this.set('ui', null);
     }
+    
+    this._super();
   },
 
   // Each jQuery UI widget has a series of options that can be configured.
