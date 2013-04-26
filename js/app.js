@@ -15,13 +15,15 @@ JQ.Widget = Em.Mixin.create({
     // Make sure that jQuery UI events trigger methods on this view.
     this._gatherEvents(options);
 
-    // Create a new instance of the jQuery UI widget based on its `uiType`
-    // and the current element.
     
-	var namespace = this.get('uiNamespace') || 'ui'; //the included jQuery UI widgets use the 'ui' namespace, ohter jQuery UI plugins may (or rather should) use their own namespace
+    
+	var namespace = this.get('uiNamespace') || 'ui'; //the included jQuery UI widgets use the 'ui' namespace, other jQuery UI plugins may (or rather should) use their own namespace
 	
+	// Create a new instance of the jQuery UI widget based 
+	// on its `uiType`, it's jQuery UI Namespace 
+	// and the current element.
 	jQuery(this.get('element'))[this.get('uiType')](options); //create widget
-	var ui = jQuery(this.get('element')).data("ui-"+this.get('uiType')) ;//save instance
+	var ui = jQuery(this.get('element')).data(namespace+"-"+this.get('uiType')) ;//save instance
 	
 	
     // Save off the instance of the jQuery UI widget as the `ui` property
@@ -196,9 +198,7 @@ App.ProgressBarView = JQ.ProgressBarView.extend({
     // list of people. Because our template binds the JQ.MenuView to this
     // value, it will automatically populate with the new people and
     // refresh the menu.
-    
-    console.log("epic stuff happened");
-    
+   
     this.set('controller.people', [
       Em.Object.create({
         name: "Tom DAAAAALE"
