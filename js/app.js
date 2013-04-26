@@ -15,10 +15,17 @@ JQ.Widget = Em.Mixin.create({
     // Make sure that jQuery UI events trigger methods on this view.
     this._gatherEvents(options);
 
-    // Create a new instance of the jQuery UI widget based on its `uiType`
-    // and the current element.
-    var ui = jQuery.ui[this.get('uiType')](options, this.get('element'));
-
+    
+    
+	var namespace = this.get('uiNamespace') || 'ui'; //the included jQuery UI widgets use the 'ui' namespace, other jQuery UI plugins may (or rather should) use their own namespace
+	
+	// Create a new instance of the jQuery UI widget based 
+	// on its `uiType`, it's jQuery UI Namespace 
+	// and the current element.
+	jQuery(this.get('element'))[this.get('uiType')](options); //create widget
+	var ui = jQuery(this.get('element')).data(namespace+"-"+this.get('uiType')) ;//save instance
+	
+	
     // Save off the instance of the jQuery UI widget as the `ui` property
     // on this Ember view.
     this.set('ui', ui);
@@ -38,7 +45,10 @@ JQ.Widget = Em.Mixin.create({
           this.removeObserver(prop, observers[prop]);
         }
       }
-      ui._destroy();
+      
+      
+      //ui._destroy(); this is private, so we better use
+      ui.destroy(); 
     }
   },
 
@@ -97,10 +107,11 @@ JQ.Widget = Em.Mixin.create({
 
 // Create a new Ember view for the jQuery UI Button widget
 JQ.ButtonView = Em.View.extend(JQ.Widget, {
-  uiType: 'button',
-  uiOptions: ['label', 'disabled'],
-
-  tagName: 'button'
+  uiType: 'myButton',
+  uiOptions: ['label'], //if this is not provided, the jQueryUI mixing fails since it triues to collect options that arn't existing. It needs to be Array
+  uiNamespace: 'myprefix',
+  tagName: 'button',
+  uiEvents:['buttonclick']//if this is not provided, the jQueryUI mixing fails since it triues to collect options that arn't existing. It needs to be Array.
 });
 
 // Create a new Ember view for the jQuery UI Menu widget.
@@ -110,6 +121,7 @@ JQ.ButtonView = Em.View.extend(JQ.Widget, {
 // This means that you should use `#collection` in your template to
 // create this view.
 JQ.MenuView = Em.CollectionView.extend(JQ.Widget, {
+
   uiType: 'menu',
   uiOptions: ['disabled'],
   uiEvents: ['select'],
@@ -133,7 +145,8 @@ JQ.MenuView = Em.CollectionView.extend(JQ.Widget, {
     // bindings is the content of this child view.
     context: function(){
       return this.get('content');
-    }.property('content')
+    }.property('content'),
+		template: Em.Handlebars.compile("{{name}}")
   })
 });
 
@@ -167,7 +180,7 @@ App.ApplicationController = Em.Controller.extend({
 // Create a subclass of `JQ.ButtonView` to define behavior for our button.
 App.ButtonView = JQ.ButtonView.extend({
   // When the button is clicked...
-  click: function() {
+  buttonclick: function() {
     // Disable the button.
     this.set('disabled', true);
 
@@ -188,6 +201,7 @@ App.ProgressBarView = JQ.ProgressBarView.extend({
     // list of people. Because our template binds the JQ.MenuView to this
     // value, it will automatically populate with the new people and
     // refresh the menu.
+   
     this.set('controller.people', [
       Em.Object.create({
         name: "Tom DAAAAALE"
