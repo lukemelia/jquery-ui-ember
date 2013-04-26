@@ -107,10 +107,11 @@ JQ.Widget = Em.Mixin.create({
 
 // Create a new Ember view for the jQuery UI Button widget
 JQ.ButtonView = Em.View.extend(JQ.Widget, {
-  uiType: 'button',
-  uiOptions: ['label', 'disabled'],
-
-  tagName: 'button'
+  uiType: 'myButton',
+  uiOptions: ['label'], //if this is not provided, the jQueryUI mixing fails since it triues to collect options that arn't existing. It needs to be Array
+  uiNamespace: 'myprefix',
+  tagName: 'button',
+  uiEvents:['buttonclick']//if this is not provided, the jQueryUI mixing fails since it triues to collect options that arn't existing. It needs to be Array.
 });
 
 // Create a new Ember view for the jQuery UI Menu widget.
@@ -120,6 +121,7 @@ JQ.ButtonView = Em.View.extend(JQ.Widget, {
 // This means that you should use `#collection` in your template to
 // create this view.
 JQ.MenuView = Em.CollectionView.extend(JQ.Widget, {
+
   uiType: 'menu',
   uiOptions: ['disabled'],
   uiEvents: ['select'],
@@ -143,7 +145,8 @@ JQ.MenuView = Em.CollectionView.extend(JQ.Widget, {
     // bindings is the content of this child view.
     context: function(){
       return this.get('content');
-    }.property('content')
+    }.property('content'),
+		template: Em.Handlebars.compile("{{name}}")
   })
 });
 
@@ -177,7 +180,7 @@ App.ApplicationController = Em.Controller.extend({
 // Create a subclass of `JQ.ButtonView` to define behavior for our button.
 App.ButtonView = JQ.ButtonView.extend({
   // When the button is clicked...
-  click: function() {
+  buttonclick: function() {
     // Disable the button.
     this.set('disabled', true);
 

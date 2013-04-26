@@ -21,12 +21,25 @@
   <![endif]-->
 </head>
 <body>
+
+<!--Work In Progress:
+    {{#view JQ.MenuView contentBinding="people" disabledBinding="menuDisabled"}}
+    {{#each people}}
+      <a href="#">{{name}}</a>
+   
+    {{else}}
+      <a href="#">LIST NOT LOADED</a>
+	{{/each}}
+    {{/view}}
+ -->
+
   <script type="text/x-handlebars">
     {{view App.ButtonView label="Click to Load People"}}
     <br><br>
     {{view App.ProgressBarView valueBinding="progress"}}
     <br><br>
-    {{#collection JQ.MenuView contentBinding="people" disabledBinding="menuDisabled"}}
+    
+     {{#collection JQ.MenuView contentBinding="people" disabledBinding="menuDisabled"}}
       <a href="#">{{name}}</a>
     {{else}}
       <a href="#">LIST NOT LOADED</a>
@@ -35,6 +48,7 @@
 
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/jquery-ui-1.10.2.js"></script>
+  <script src="js/libs/customExampleWidget.js"></script>
   <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
   <script src="js/libs/ember-1.0.0-rc.2.js"></script>
   <script src="js/app.js"></script>
