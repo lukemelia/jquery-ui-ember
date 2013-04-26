@@ -21,12 +21,8 @@
   <![endif]-->
 </head>
 <body>
-  <script type="text/x-handlebars">
-    {{view App.ButtonView label="Click to Load People"}}
-    <br><br>
-    {{view App.ProgressBarView valueBinding="progress"}}
-    <br><br>
-    
+
+<!--Work In Progress:
     {{#view JQ.MenuView contentBinding="people" disabledBinding="menuDisabled"}}
     {{#each people}}
       <a href="#">{{name}}</a>
@@ -35,7 +31,14 @@
       <a href="#">LIST NOT LOADED</a>
 	{{/each}}
     {{/view}}
-	
+ -->
+
+  <script type="text/x-handlebars">
+    {{view App.ButtonView label="Click to Load People"}}
+    <br><br>
+    {{view App.ProgressBarView valueBinding="progress"}}
+    <br><br>
+    
      {{#collection JQ.MenuView contentBinding="people" disabledBinding="menuDisabled"}}
       <a href="#">{{name}}</a>
     {{else}}

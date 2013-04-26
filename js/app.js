@@ -121,15 +121,6 @@ JQ.ButtonView = Em.View.extend(JQ.Widget, {
 // This means that you should use `#collection` in your template to
 // create this view.
 JQ.MenuView = Em.CollectionView.extend(JQ.Widget, {
-/*JAN:
-* Collection View extends Container view, so first that: 
-* Enables use of mutableArray methods in order to manage Child views.
-* 
-* 
-* 
-* 
- */
-
 
   uiType: 'menu',
   uiOptions: ['disabled'],
