@@ -5,54 +5,54 @@
   <title>app.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
-  <link rel="stylesheet" media="all" href="docco.css" />
+  <link rel="stylesheet" media="all" href="docco-v2.css" />
 </head>
 <body>
   <div id="container">
     <div id="background"></div>
-    
+
     <ul class="sections">
-        
+
           <li id="title">
               <div class="annotation">
                   <h1>app.js</h1>
               </div>
           </li>
-        
-        
-        
+
+
+
         <li id="section-1">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              
+
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>window.App = Ember.Application.create();</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-2">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
               <p>Put jQuery UI inside its own namespace</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>JQ = Ember.Namespace.create();</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-3">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
@@ -60,15 +60,15 @@
 mixin syntax.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>JQ.Widget = Em.Mixin.create({</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-4">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
@@ -76,45 +76,45 @@ mixin syntax.</p>
 method.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>  didInsertElement: <span class="keyword">function</span>() {</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-5">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>Make jQuery UI options available as Ember properties</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> options = <span class="keyword">this</span>._gatherOptions();</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-6">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Make sure that jQuery UI events trigger methods on this view.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>._gatherEvents(options);</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-7">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
@@ -122,15 +122,15 @@ method.</p>
 and the current element.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> ui = jQuery.ui[<span class="keyword">this</span>.get(<span class="string">'uiType'</span>)](options, <span class="keyword">this</span>.get(<span class="string">'element'</span>));</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-8">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
@@ -138,16 +138,16 @@ and the current element.</p>
 on this Ember view.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.set(<span class="string">'ui'</span>, ui);
   },</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-9">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
@@ -155,18 +155,18 @@ on this Ember view.</p>
 this method.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>  willDestroyElement: <span class="keyword">function</span>() {
     <span class="keyword">var</span> ui = <span class="keyword">this</span>.get(<span class="string">'ui'</span>);
 
     <span class="keyword">if</span> (ui) {</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-10">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
@@ -174,7 +174,7 @@ this method.</p>
 options available as Ember properties.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>      <span class="keyword">var</span> observers = <span class="keyword">this</span>._observers;
       <span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> observers) {
         <span class="keyword">if</span> (observers.hasOwnProperty(prop)) {
@@ -184,13 +184,13 @@ options available as Ember properties.</p>
       ui._destroy();
     }
   },</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-11">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
@@ -201,16 +201,16 @@ with Ember bindings, any time the Ember property for a
 given jQuery UI option changes, we update the jQuery UI widget.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>  _gatherOptions: <span class="keyword">function</span>() {
     <span class="keyword">var</span> uiOptions = <span class="keyword">this</span>.get(<span class="string">'uiOptions'</span>), options = {};</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-12">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
@@ -218,16 +218,16 @@ given jQuery UI option changes, we update the jQuery UI widget.</p>
 as Ember properties.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    uiOptions.forEach(<span class="keyword">function</span>(key) {
       options[key] = <span class="keyword">this</span>.get(key);</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-13">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
@@ -236,40 +236,40 @@ call jQuery UI&#39;s <code>option</code> method to reflect the property onto
 the jQuery UI widget.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>      <span class="keyword">var</span> observer = <span class="keyword">function</span>() {
         <span class="keyword">var</span> value = <span class="keyword">this</span>.get(key);
         <span class="keyword">this</span>.get(<span class="string">'ui'</span>).option(key, value);
       };
 
       <span class="keyword">this</span>.addObserver(key, observer);</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-14">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Insert the observer in a Hash so we can remove it later.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>      <span class="keyword">this</span>._observers = <span class="keyword">this</span>._observers || {};
       <span class="keyword">this</span>._observers[key] = observer;
     }, <span class="keyword">this</span>);
 
     <span class="keyword">return</span> options;
   },</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-15">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
@@ -281,7 +281,7 @@ could implement the <code>complete</code> method to be notified when the jQuery
 UI widget triggered the event.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>  _gatherEvents: <span class="keyword">function</span>(options) {
     <span class="keyword">var</span> uiEvents = <span class="keyword">this</span>.get(<span class="string">'uiEvents'</span>) || [], self = <span class="keyword">this</span>;
 
@@ -289,13 +289,13 @@ UI widget triggered the event.</p>
       <span class="keyword">var</span> callback = self[event];
 
       <span class="keyword">if</span> (callback) {</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-16">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
@@ -304,39 +304,39 @@ it in along with the creation options. Update the options hash
 to include any event callbacks.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>        options[event] = <span class="keyword">function</span>(event, ui) { callback.call(self, event, ui); };
       }
     });
   }
 });</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-17">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Create a new Ember view for the jQuery UI Button widget</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>JQ.ButtonView = Em.View.extend(JQ.Widget, {
   uiType: <span class="string">'button'</span>,
   uiOptions: [<span class="string">'label'</span>, <span class="string">'disabled'</span>],
 
   tagName: <span class="string">'button'</span>
 });</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-18">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
@@ -347,20 +347,20 @@ Ember&#39;s CollectionView rather than a normal view.</p>
 create this view.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>JQ.MenuView = Em.CollectionView.extend(JQ.Widget, {
   uiType: <span class="string">'menu'</span>,
   uiOptions: [<span class="string">'disabled'</span>],
   uiEvents: [<span class="string">'select'</span>],
 
   tagName: <span class="string">'ul'</span>,</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-19">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
@@ -368,19 +368,19 @@ create this view.</p>
 refresh the jQuery UI widget.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>  arrayDidChange: <span class="keyword">function</span>(content, start, removed, added) {
     <span class="keyword">this</span>._super(content, start, removed, added);
 
     <span class="keyword">var</span> ui = <span class="keyword">this</span>.get(<span class="string">'ui'</span>);
     <span class="keyword">if</span> (ui) {</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-20">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
@@ -388,18 +388,18 @@ refresh the jQuery UI widget.</p>
 render cycle</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>      Em.run.scheduleOnce(<span class="string">'afterRender'</span>, ui, ui.refresh);
     }
   },
   itemViewClass: Em.View.extend({</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-21">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
@@ -407,38 +407,38 @@ render cycle</p>
 bindings is the content of this child view.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    context: <span class="keyword">function</span>(){
       <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'content'</span>);
     }.property(<span class="string">'content'</span>)
   })
 });</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-22">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Create a new Ember view for the jQuery UI Progress Bar widget</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>JQ.ProgressBarView = Em.View.extend(JQ.Widget, {
   uiType: <span class="string">'progressbar'</span>,
   uiOptions: [<span class="string">'value'</span>, <span class="string">'max'</span>],
   uiEvents: [<span class="string">'change'</span>, <span class="string">'complete'</span>]
 });</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-23">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
@@ -446,131 +446,131 @@ bindings is the content of this child view.</p>
 views.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>App.ApplicationController = Em.Controller.extend({
   progress: <span class="number">0</span>,
   menuDisabled: <span class="literal">true</span>,
   people: [],
   incrementProgress: <span class="keyword">function</span>() {</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-24">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Get the current progress value.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> val = <span class="keyword">this</span>.get(<span class="string">'progress'</span>);
 
     <span class="keyword">if</span>(val &lt; <span class="number">100</span>) {</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-25">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>If the value is less than 100, increment it.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>      <span class="keyword">this</span>.incrementProperty(<span class="string">'progress'</span>);</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-26">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Schedule another incrementProgress call in 30ms.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>      Ember.run.later(<span class="keyword">this</span>, <span class="keyword">this</span>.incrementProgress, <span class="number">30</span>);
     }
   }
 });</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-27">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Create a subclass of <code>JQ.ButtonView</code> to define behavior for our button.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>App.ButtonView = JQ.ButtonView.extend({</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-28">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>When the button is clicked...</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>  click: <span class="keyword">function</span>() {</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-29">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Disable the button.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.set(<span class="string">'disabled'</span>, <span class="literal">true</span>);</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-30">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Increment the progress bar by delegating to the controller.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.get(<span class="string">'controller'</span>).incrementProgress();
   }
 });</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-31">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
@@ -578,15 +578,15 @@ views.</p>
 progress bar.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>App.ProgressBarView = JQ.ProgressBarView.extend({</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-32">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
@@ -596,15 +596,15 @@ the <code>complete</code> event in <code>didInsertElement</code>, which calls th
 <code>complete</code> method.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>  complete: <span class="keyword">function</span>() {</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-33">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
@@ -614,7 +614,7 @@ value, it will automatically populate with the new people and
 refresh the menu.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.set(<span class="string">'controller.people'</span>, [
       Em.Object.create({
         name: <span class="string">"Tom DAAAAALE"</span>
@@ -626,13 +626,13 @@ refresh the menu.</p>
         name: <span class="string">"Selden Seen"</span>
       })
     ]);</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-34">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
@@ -641,7 +641,7 @@ Because the JQ.MenuView binds its <code>disabled</code> property to
 the controller&#39;s menuDisabled, this will enable it.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.set(<span class="string">'controller.menuDisabled'</span>, <span class="literal">false</span>);
   }
 });
@@ -659,9 +659,9 @@ Template:
   &lt;a href="#"&gt;LIST NOT LOADED&lt;/a&gt;
 {{/collection}}
 */</span></pre></div></div>
-            
+
         </li>
-        
+
     </ul>
   </div>
 </body>
